@@ -6,12 +6,14 @@ Route.post('/', (context) => {
 })
 
 // Route.get('/graphiql', (context) => {
-//   return GraphQLServer.handleUI(context)
+//  return GraphQLServer.handleUI(context, {
+//    passHeader: `'Authorization': '${context.request.header("Authorization")}'`
+//  })
 // })
 
 // or add options (example)
 Route.get("/graphiql", (context) => {
   return GraphQLServer.handleUI(context, {
-    passHeader: `'Authorization': '${context.request.header("Authorization")}'`
+    passHeader: `'Authorization': 'meu-token'`
   })
 })

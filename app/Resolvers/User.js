@@ -3,14 +3,25 @@
 const User = use('App/Models/User')
 const { validateAll } = use('Validator')
 const GraphQLError = use('Adonis/Addons/GraphQLError')
+const { combineResolvers } = require('graphql-resolvers')
+const isAuthenticated = require('../Utils/common_resolvers')
+
+// const users = async () => {
+//     const users = await User.all()
+//     return users.toJSON()
+// }
+// console.log(isAuthenticated);
 
 const resolvers = {
 
     Query: {
-        async users() {
-            const users = await User.all()
-            return users.toJSON()
-        },
+        users: combineResolvers(
+            isAuthenticated,
+            async () => {
+                const users = await User.all()
+                return users.toJSON()
+            }
+        ),
 
         async user(_, { id }) {
             const user = await User.first(id)
@@ -40,7 +51,7 @@ const resolvers = {
     },
 
     User: {
-       
+
     }
 
 }
