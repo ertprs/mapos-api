@@ -1,0 +1,5 @@
+type Position {
+    id: ID!
+    position: String
+    cbo: String
+}

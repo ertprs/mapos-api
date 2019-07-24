@@ -5,9 +5,10 @@ const Model = use('Model')
 
 /** @type {import('@adonisjs/framework/src/Hash')} */
 const Hash = use('Hash')
+const uuid = use('uuid/v1')
 
 class User extends Model {
-  static boot () {
+  static boot() {
     super.boot()
 
     /**
@@ -19,6 +20,19 @@ class User extends Model {
         userInstance.password = await Hash.make(userInstance.password)
       }
     })
+
+    this.addHook('beforeCreate', async (userInstance) => {
+      userInstance.uid = await uuid()
+      userInstance.provider = 'local'
+    })
+  }
+
+  static get hidden() {
+    return ['password']
+  }
+
+  permission() {
+    return this.belongsTo('App/Models/Permission');
   }
 
   /**
@@ -31,7 +45,7 @@ class User extends Model {
    *
    * @return {Object}
    */
-  tokens () {
+  tokens() {
     return this.hasMany('App/Models/Token')
   }
 }

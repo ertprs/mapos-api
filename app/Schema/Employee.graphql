@@ -1,0 +1,8 @@
+type Employee {
+  id: ID!
+  salary: Float
+  commission: Float
+  person: Person
+  position: Position
+  status: Boolean
+}

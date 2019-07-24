@@ -1,0 +1,6 @@
+type Permission {
+  id: ID!
+  name: String
+  permission: String
+  status: Boolean
+}
