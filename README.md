@@ -4,10 +4,6 @@
   <img src="https://github.com/map-os/mapos-api/blob/master/docs/lgkolqucok_45785045302.png?raw=true" width="600px">
 </div>
 
-<div align="center">
-  <img src="https://github.com/map-os/mapos-api/blob/master/docs/graphiql.png?raw=true" width="600px">
-</div>
-
 ---
 This is the boilerplate for creating an API server in AdonisJs, it comes pre-configured with.
 
@@ -40,3 +36,8 @@ adonis seed
 ```bash
 adonis serve --dev -e graphql
 ```
+
+
+<div align="center">
+  <img src="https://github.com/map-os/mapos-api/blob/master/docs/graphiql.png?raw=true" width="100%">
+</div>
