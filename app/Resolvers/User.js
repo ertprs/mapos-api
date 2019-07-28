@@ -16,13 +16,22 @@ const resolvers = {
             isAuthenticated,
             async () => {
                 const users = await User.all()
-                return users
+                return users.toJSON()
             }
         ),
-        async user(_, { id }) {
-            const user = await User.find(id)
-            return user
-        }
+        user: combineResolvers(
+            isAuthenticated,
+            async (_, { id }) => {
+                const user = await User.find(id)
+                return user
+            }
+        ),
+        me: combineResolvers(
+            isAuthenticated,
+            async (_) => {
+                return _.context.user;
+            }
+        )
     },
 
     Mutation: {
@@ -32,7 +41,7 @@ const resolvers = {
                 email: 'required|email|unique:users,email',
                 password: 'required',
                 permission_id: 'required',
-                person_id: 'required',
+                person_id: 'required|unique:users,person_id',
                 password_confirmation: 'required_if:password|same:password',
             }
             const validation = await validateAll(data, rules)
@@ -42,6 +51,11 @@ const resolvers = {
             delete data.password_confirmation
             return await User.create(data)
         },
+        // Handles user login
+        async login(_, { email, password }, { auth }) {
+            const { token } = await auth.attempt(email, password)
+            return token
+        }
     },
 
     User: {

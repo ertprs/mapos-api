@@ -1,10 +1,12 @@
 type Query {
   users: [User]
-  user(id: ID!): User
+  user(id: ID!): User,
+  me: User
 }
 
 type Mutation {
-  createUser(first_name: String!, email: String!, password: String!, password_confirmation: String!, permission_id: Int, person_id: Int): User
+  createUser(first_name: String!, email: String!, password: String!, password_confirmation: String!, permission_id: Int, person_id: Int): User,
+  login(email: String!, password: String!): String
 }
 
 type User {
