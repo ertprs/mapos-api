@@ -8,14 +8,27 @@ const { validateAll } = use('Validator')
 const GraphQLError = use('Adonis/Addons/GraphQLError')
 const { combineResolvers } = require('graphql-resolvers')
 const isAuthenticated = require('../Utils/common_resolvers')
+const Config = use('Config')
+const operators = require('../Utils/operators')
 
 const resolvers = {
 
     Query: {
         users: combineResolvers(
             isAuthenticated,
-            async () => {
-                const users = await User.all()
+            async (_, { page = 1, perPage, search, orderBy = { field: 'id', order: 'desc' } }) => {
+
+                if (perPage > Config.get('app.maxPerPage')) perPage = Config.get('app.maxPerPage')
+
+                const users = await User.query().where(function () {
+                    if (search) {
+                        search.forEach(el => {
+                            this.where(el.field, operators[el.operator], el.term)
+                        });
+                    }
+                })
+                .orderBy(orderBy.field, orderBy.order)
+                .paginate(page, perPage)
                 return users.toJSON()
             }
         ),

@@ -16,7 +16,9 @@ module.exports = {
   |
   */
 
-  name: Env.get('APP_NAME', 'AdonisJs'),
+  name: Env.get('APP_NAME', 'Map-OS'),
+
+  maxPerPage: Env.get('APP_MAX_PER_PAGE', 100),
 
   /*
   |--------------------------------------------------------------------------

@@ -1,0 +1,20 @@
+input Search {
+    field: String
+    operator: Operator
+    term: String
+}
+
+input OrderBy {
+    field: String
+    order: String
+}
+
+enum Operator {
+    like,    
+    eq,
+    ne,
+    gt,
+    get,
+    lt,
+    let
+}

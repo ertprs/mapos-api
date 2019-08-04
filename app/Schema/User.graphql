@@ -1,5 +1,5 @@
 type Query {
-  users: [User],
+  users(page: Int, perPage: Int, search: [Search], orderBy: OrderBy): UserPaginated,
   user(id: ID!): User,
   me: User
 }
@@ -18,4 +18,12 @@ type User {
   person: Person,
   employee: Employee,
   permission: Permission
+}
+
+type UserPaginated {
+  total: Int
+  perPage: Int
+  lastPage: Int
+  page: Int
+  data: [User]
 }
