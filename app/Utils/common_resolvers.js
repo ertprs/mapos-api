@@ -18,8 +18,8 @@ const isAuthenticated = combineResolvers(baseResolver, async (root, args, contex
 
         // Get the authenticated user
         const user = await context.auth.getUser()
-        return context.user = user;
-        
+        context.user = user
+
     } catch (error) {
         // Throw error if user is not authenticated
         throw new GraphQLError('Missing or invalid jwt token')

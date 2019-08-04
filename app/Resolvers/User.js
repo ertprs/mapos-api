@@ -28,8 +28,8 @@ const resolvers = {
         ),
         me: combineResolvers(
             isAuthenticated,
-            async (_) => {
-                return _.context.user;
+            async (_, args, context) => {
+                return context.user;
             }
         )
     },
